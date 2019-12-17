@@ -33,15 +33,9 @@ export default {
   },
   data () {
     return {
-      isActive: this.active
-    }
-  },
-  computed: {
-    AnimateClass () {
-      return this.isActive ? this.animate : ''
-    },
-    ColorValue () {
-      return this.isActive ? this.color : ''
+      isActive: false,
+      AnimateClass: '',
+      ColorValue: ''
     }
   },
   mounted () {
@@ -50,11 +44,25 @@ export default {
         console.error('this color must be hexcolor or rgbcolor  ---VueStar')
       }
     }
+
+    this.isActive = this.active
+    if (this.isActive) {
+      this.ColorValue = this.color
+    }
   },
   methods: {
     toggle () {
       if (!this.disabled) {
         this.isActive = !this.isActive
+
+        if (this.isActive) {
+          this.AnimateClass = this.animate
+          this.ColorValue = this.color
+        } else {
+          this.AnimateClass = ''
+          this.ColorValue = ''
+        }
+
         this.$emit('toggle', this.isActive)
       }
     }
